@@ -4,13 +4,15 @@ public class Level
 {
 
     public String world;
-    public String level;
+    public String subworld;
     public String tmxFile;
+    public int numMoves;
 
-    public Level( String world, String level, String tmxFile )
+    public Level( String world, String subworld, String tmxFile, int numMoves )
     {
         this.world = world;
-        this.level = level;
+        this.subworld = subworld;
         this.tmxFile = tmxFile;
+        this.numMoves = numMoves;
     }
 }

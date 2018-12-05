@@ -134,7 +134,7 @@ public class PlayScreen implements Screen {
 
 
         hud = new Hud(game.batch);
-        hud.setLevel( Integer.toString( LevelManager.currentWorld ) + "-" + Integer.toString( LevelManager.currentLevel ) );
+        hud.setLevel( LevelManager.tmxMap.get( LevelManager.currentLevel ).world  + "-" + LevelManager.tmxMap.get( LevelManager.currentLevel ).subworld  );
 
         scoreIndicator = new ScoreIndicator(this, game.batch);
 

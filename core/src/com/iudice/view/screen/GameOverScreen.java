@@ -54,7 +54,7 @@ public class GameOverScreen implements Screen {
         countDown -= delta;
 
         if (countDown < 0.0f) {
-            game.setScreen(new PlayScreen(game, LevelManager.currentTmxFile ));
+            LevelManager.loadCurrentLevel( game );
             dispose();
         }
     }

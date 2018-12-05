@@ -30,7 +30,7 @@ public class GameStart extends Game {
 			levelManager = new LevelManager();
 		}
 
-		LevelManager.loadNextLevel( this );
+		LevelManager.loadCurrentLevel( this );
 	}
 
 	@Override

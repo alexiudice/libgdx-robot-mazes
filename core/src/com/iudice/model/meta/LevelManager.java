@@ -4,17 +4,18 @@ import com.iudice.GameStart;
 import com.iudice.view.screen.LevelScreen;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class LevelManager
 {
     public static LevelManager instance;
 
-    public static Map<Integer,Map<Integer,String>> tmxMap;
+    public static Map<String,Level> tmxMap;
 
-    public static int currentWorld;
-    public static int currentLevel;
-    public static String currentTmxFile;
+    public static Iterator<String> levelIterator;
+    public static String currentLevel;
 
     public LevelManager()
     {
@@ -22,39 +23,33 @@ public class LevelManager
             instance = this;
         }
 
-        currentWorld = 1;
-        currentLevel = 1;
 
         assignTmxFilesToMap();
     }
 
     private void assignTmxFilesToMap()
     {
-        tmxMap = new HashMap<Integer,Map<Integer,String>>(  );
-        Map<Integer,String> worldOne = new HashMap<Integer,String>(  );
-        worldOne.put( 1, "maps/Level_1-1.tmx" );
-        worldOne.put( 2, "maps/Level_1-2.tmx" );
+        tmxMap = new LinkedHashMap<String,Level>(  );
+        tmxMap.put( "1-1",new Level( "1","1", "maps/Level_1-1.tmx", 4) );
+        tmxMap.put( "1-2",new Level( "1","2", "maps/Level_1-2.tmx", 4) );
 
 
-
-        tmxMap.put( 1, worldOne );
+        levelIterator = tmxMap.keySet().iterator();
+        currentLevel = levelIterator.next();
     }
 
     public static void loadNextLevel( GameStart gameStart )
     {
-        currentTmxFile =  tmxMap.get( currentWorld ).get( currentLevel );
-        gameStart.setScreen( new LevelScreen( gameStart, currentTmxFile ));
-
-        if(currentLevel == 4)
+        if( levelIterator.hasNext())
         {
-            currentLevel = 1;
-            currentWorld++;
+            currentLevel = levelIterator.next();
         }
-        else
-        {
-            currentLevel++;
-        }
+        loadCurrentLevel( gameStart );
+    }
 
+    public static void loadCurrentLevel( GameStart gameStart )
+    {
+        gameStart.setScreen( new LevelScreen( gameStart, tmxMap.get( currentLevel ).tmxFile ));
     }
 
 }
