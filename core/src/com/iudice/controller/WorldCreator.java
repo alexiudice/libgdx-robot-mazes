@@ -25,6 +25,7 @@ public class WorldCreator {
 
     private Vector2 startPosition;
     private Vector2 flagPosition;
+    private Vector2 cursorPosition;
 
     public WorldCreator(PlayScreen playScreen, TiledMap tiledMap) {
 
@@ -96,6 +97,18 @@ public class WorldCreator {
             }
         }
 
+        cursorPosition = new Vector2(64.0f, 64.0f);
+
+        mapLayer = tiledMap.getLayers().get("Cursor");
+        if (mapLayer != null) {
+            if (mapLayer.getObjects().getCount() > 0) {
+                float x = ((TiledMapTileMapObject) mapLayer.getObjects().get(0)).getX();
+                float y = ((TiledMapTileMapObject) mapLayer.getObjects().get(0)).getY();
+
+                cursorPosition = new Vector2(x, y);
+            }
+        }
+
     }
 
     public Vector2 getStartPosition() {
@@ -104,6 +117,11 @@ public class WorldCreator {
 
     public Vector2 getFlagPosition() {
         return flagPosition;
+    }
+
+    public Vector2 getCursorPosition()
+    {
+        return cursorPosition;
     }
 
     public Array<MapTileObject> getMapTileObject() {

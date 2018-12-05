@@ -10,6 +10,7 @@ public class AssetConstants
     static {
         Map<String, String> temp = new HashMap<String,String>(  );
         temp.put("robot", "imgs/robot.atlas");
+        temp.put("arrows", "imgs/arrows.atlas");
         imgsMap = Collections.unmodifiableMap(temp);
     }
 
