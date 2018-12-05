@@ -2,6 +2,7 @@ package com.iudice;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.iudice.controller.AssetLoader;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
 
@@ -14,6 +15,8 @@ public class GameStart extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+
+		AssetLoader.loadAssets();
 
 		if (GameManager.instance != null) {
 			gameManager = GameManager.instance;
