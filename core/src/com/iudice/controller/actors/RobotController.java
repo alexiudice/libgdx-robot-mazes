@@ -54,9 +54,17 @@ public class RobotController
                 reset();
                 break;
             }
-            Movement movement = robot.movementList.get( robot.nextMove % robot.numMoves );
-            RobotController.preformMove( movement );
-            robot.nextMove++;
+            if(robot.timeSinceLastMove > robot.timeBetweenMoves)
+            {
+                Movement movement = robot.movementList.get( robot.nextMove % robot.numMoves );
+                RobotController.preformMove( movement );
+                robot.nextMove++;
+                robot.timeSinceLastMove = 0f;
+            }
+            else
+            {
+                robot.timeSinceLastMove += delta;
+            }
             break;
         case WAITING:
             //Make single move
@@ -90,23 +98,24 @@ public class RobotController
     public static void preformMove(Movement m){
         float currentX = robot.getBody().getPosition().x;
         float currentY = robot.getBody().getPosition().y;
+        float moveDistance = 16/GameManager.PPM;
         switch ( m )
         {
         case UP:
             robot.setRegion( robot.orientation.get( Movement.UP ) );
-            robot.getBody().setTransform( currentX,currentY+GameManager.PPM, 0  );
+            robot.getBody().setTransform( currentX,currentY + moveDistance, 0  );
             break;
         case DOWN:
             robot.setRegion( robot.orientation.get( Movement.DOWN ) );
-            robot.getBody().setTransform( currentX,currentY-GameManager.PPM, 0  );
+            robot.getBody().setTransform( currentX,currentY-moveDistance, 0  );
             break;
         case LEFT:
             robot.setRegion( robot.orientation.get( Movement.LEFT ) );
-            robot.getBody().setTransform( currentX - GameManager.PPM,currentY, 0  );
+            robot.getBody().setTransform( currentX - moveDistance,currentY, 0  );
             break;
         case RIGHT:
             robot.setRegion( robot.orientation.get( Movement.RIGHT) );
-            robot.getBody().setTransform( currentX + GameManager.PPM,currentY, 0  );
+            robot.getBody().setTransform( currentX + moveDistance,currentY, 0  );
             break;
         }
 

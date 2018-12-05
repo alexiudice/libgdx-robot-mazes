@@ -37,6 +37,9 @@ public class Robot extends RigidBody
     public boolean isCollided;
     public State state;
 
+    public float timeSinceLastMove;
+    public final float timeBetweenMoves = 1.5f;
+
     public Robot( PlayScreen playScreen, float x, float y )
     {
         super( playScreen, x, y );
