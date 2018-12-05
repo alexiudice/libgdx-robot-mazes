@@ -47,4 +47,9 @@ public abstract class RigidBody extends Sprite {
     public boolean isDestroyed() {
         return destroyed;
     }
+
+    public Body getBody()
+    {
+        return body;
+    }
 }

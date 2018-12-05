@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.iudice.GameStart;
+import com.iudice.model.actors.Robot;
 import com.iudice.model.actors.maptiles.MapTileObject;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
@@ -70,7 +71,7 @@ public class PlayScreen implements Screen {
 //    protected Array<Effect> effects;
 //    protected LinkedList<SpawningEffect> effectSpawnQueue;
 
-//    protected Mario mario;
+    protected Robot robot;
 
     protected Hud hud;
     protected ScoreIndicator scoreIndicator;
@@ -120,7 +121,7 @@ public class PlayScreen implements Screen {
         WorldCreator worldCreator = new WorldCreator(this, tiledMap);
         mapTileObjects = worldCreator.getMapTileObject();
 //        enemies = worldCreator.getEnemies();
-//        mario = new Mario(this, (worldCreator.getStartPosition().x + 8) / GameManager.PPM, (worldCreator.getStartPosition().y + 8) / GameManager.PPM);
+        robot = new Robot(this, (worldCreator.getStartPosition().x + 8) / GameManager.PPM, (worldCreator.getStartPosition().y + 8) / GameManager.PPM);
 
 
 //        // for spawning item
