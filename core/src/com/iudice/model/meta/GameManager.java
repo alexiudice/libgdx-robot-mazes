@@ -30,16 +30,9 @@ public class GameManager implements Disposable {
     public static final float STEP = 1 / 60.0f;
 
     public static final short NOTHING_BIT = 0;
-    public static final short GROUND_BIT = 1;
-    public static final short MARIO_BIT = 1 << 1;
-    public static final short MARIO_HEAD_BIT = 1 << 2;
-    public static final short ENEMY_LETHAL_BIT = 1 << 3;
-    public static final short ENEMY_WEAKNESS_BIT = 1 << 4;
-    public static final short ENEMY_INTERACT_BIT = 1 << 5;
-    public static final short ITEM_BIT = 1 << 6;
-    public static final short WEAPON_BIT = 1 << 7;
+    public static final short WALL_BIT = 1;
+    public static final short ROBOT_BIT = 1 << 1;
     public static final short FLAGPOLE_BIT = 1 << 8;
-    public static final short LAVA_BIT = 1 << 9;
 
     public static final String musicPath = "audio/music/";
 

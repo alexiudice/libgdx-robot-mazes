@@ -14,7 +14,7 @@ public class WallRight extends Wall
 
     public int width = 2;
     public int height = 16;
-    public Vector2 center = new Vector2( 7,0 );
+    public Vector2 center = new Vector2( 6,0 );
 
     public WallRight( PlayScreen playScreen, float x, float y, TiledMapTileMapObject mapObject)
     {
@@ -31,10 +31,12 @@ public class WallRight extends Wall
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2, center, 0);
+//        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2, center, 0);
+        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.filter.categoryBits = GameManager.GROUND_BIT;
+        fixtureDef.filter.categoryBits = GameManager.WALL_BIT;
+        fixtureDef.filter.maskBits = GameManager.ROBOT_BIT;
         fixtureDef.shape = shape;
 
         body.createFixture(fixtureDef).setUserData(this);

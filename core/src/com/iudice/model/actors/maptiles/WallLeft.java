@@ -31,10 +31,12 @@ public class WallLeft extends Wall
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2, center, 0);
+//        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2, center, 0);
+        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.filter.categoryBits = GameManager.GROUND_BIT;
+        fixtureDef.filter.categoryBits = GameManager.WALL_BIT;
+        fixtureDef.filter.maskBits = GameManager.ROBOT_BIT;
         fixtureDef.shape = shape;
 
         body.createFixture(fixtureDef).setUserData(this);
