@@ -46,6 +46,7 @@ public class RobotController
 
         robot.state = Robot.State.WAITING;
 
+        robot.setRegion( robot.orientation.get( Movement.LEFT ) );
         robot.setBounds(robot.getX(),robot.getY(), 16 / GameManager.PPM, 16 / GameManager.PPM);
     }
 
@@ -76,10 +77,22 @@ public class RobotController
     public static void update( float delta )
     {
 
-        updateMovementList( Input.Keys.UP, Movement.UP );
-        updateMovementList( Input.Keys.DOWN, Movement.DOWN );
-        updateMovementList( Input.Keys.LEFT, Movement.LEFT );
-        updateMovementList( Input.Keys.RIGHT, Movement.RIGHT );
+        switch ( robot.state )
+        {
+        case WAITING:
+            updateMovementList( Input.Keys.UP, Movement.UP );
+            updateMovementList( Input.Keys.DOWN, Movement.DOWN );
+            updateMovementList( Input.Keys.LEFT, Movement.LEFT );
+            updateMovementList( Input.Keys.RIGHT, Movement.RIGHT );
+            if(Gdx.input.isKeyJustPressed( Input.Keys.ENTER ) && robot.movementList.size() == robot.numMoves)
+            {
+                robot.state = Robot.State.MOVING;
+            }
+            break;
+        case MOVING:
+            //Make single move
+
+        }
 
 
         robot.setPosition(robot.getBody().getPosition().x - robot.getWidth() / 2, robot.getBody().getPosition().y - robot.getHeight() / 2);

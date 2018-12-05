@@ -23,8 +23,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.iudice.GameStart;
+import com.iudice.controller.AssetLoader;
 import com.iudice.model.actors.Robot;
 import com.iudice.model.actors.maptiles.MapTileObject;
+import com.iudice.model.meta.AssetMaster;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
 import com.iudice.view.hud.Hud;
@@ -103,7 +105,7 @@ public class PlayScreen implements Screen {
 
         camera.position.set(GameManager.V_WIDTH / 2, GameManager.V_HEIGHT / 2, 0);
 
-        textureAtlas = new TextureAtlas("imgs/total.atlas");
+        textureAtlas = AssetMaster.getTextureAtlas( "robot" );
 
         // create Box2D world
         world = new World(GameManager.GRAVITY, true);
@@ -476,7 +478,7 @@ public class PlayScreen implements Screen {
 //        }
 //
 //        // draw Mario
-//        mario.draw(game.batch);
+        robot.draw(game.batch);
 
         game.batch.end();
 
