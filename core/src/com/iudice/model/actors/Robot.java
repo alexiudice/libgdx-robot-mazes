@@ -2,6 +2,7 @@ package com.iudice.model.actors;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -24,6 +25,8 @@ public class Robot extends RigidBody
         WAITING
     }
 
+    public Vector2 startPosition;
+
     public Map<Movement,TextureRegion> orientation = new HashMap<Movement,TextureRegion>(  );
     public TextureAtlas textureAtlas;
 
@@ -44,7 +47,25 @@ public class Robot extends RigidBody
     @Override
     protected void defBody()
     {
-        RobotController.defBody(this, world,body );
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(getX(), getY());
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+
+        body = world.createBody(bodyDef);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(16 / GameManager.PPM / 2, 16 / GameManager.PPM / 2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.filter.categoryBits = GameManager.ROBOT_BIT;
+        fixtureDef.filter.maskBits = GameManager.FLAGPOLE_BIT | GameManager.WALL_BIT;
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+
+        body.createFixture(fixtureDef).setUserData(this);
+
+        shape.dispose();
     }
 
     @Override

@@ -9,6 +9,9 @@ import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
 import com.iudice.model.misc.Movement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MovementBarController
 {
     private static MovementBar movementBar;
@@ -71,12 +74,31 @@ public class MovementBarController
             }
             break;
         case PRODUCING:
+            List<Movement> movements = new ArrayList<Movement>(  );
+            for( MovementBar.MovementArrow movementArrow : movementBar.movementArrows)
+            {
+                movements.add( movementArrow.movement );
+            }
+            RobotController.startMoving( movements );
+            break;
         }
     }
 
     public static void updateCursorPosition()
     {
         movementBar.cursorCurrentPosition = new Vector2(  movementBar.cursorStartPosition.x + movementBar.movementArrows.size(), movementBar.cursorStartPosition.y);
+    }
+
+    public static void reset()
+    {
+        for( MovementBar.MovementArrow movementArrow : movementBar.movementArrows)
+        {
+            movementArrow.queueDestroy();
+        }
+
+        movementBar.movementArrows.clear();
+        movementBar.state = MovementBar.State.CONSUMING;
+        updateCursorPosition();
     }
 
     public static void setMovementBar( MovementBar movementBar )
