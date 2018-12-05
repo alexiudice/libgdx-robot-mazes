@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.iudice.controller.actors.MovementBarController;
+import com.iudice.model.actors.maptiles.MapTileObject;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.misc.Movement;
 import com.iudice.model.phys.RigidBody;
@@ -81,12 +82,15 @@ public class MovementBar extends RigidBody
         public boolean isDrawn;
         public Movement movement;
 
-        public MovementArrow( PlayScreen playScreen, float x, float y, TextureRegion textureRegion )
+        public MovementArrow( PlayScreen playScreen, float x, float y, TextureRegion textureRegion, Movement movement )
         {
             super( playScreen, x, y );
-            isDrawn = false;
+            this.movement = movement;
             setRegion( textureRegion );
-            setBounds( x, y, 8/ GameManager.PPM, 8/ GameManager.PPM );
+            float width = 8 / GameManager.PPM;
+            float height = 8 / GameManager.PPM;
+
+            setBounds(x - width / 2, y - height / 2, width, height);
         }
 
         @Override
@@ -113,15 +117,14 @@ public class MovementBar extends RigidBody
                 return;
             }
 
-            setPosition(body.getPosition().x - 8 / GameManager.PPM, body.getPosition().y - 8 / GameManager.PPM);
+            setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - getHeight()/2);
         }
 
         public static class ArrowUp extends MovementArrow
         {
             public ArrowUp( PlayScreen playScreen, float x, float y, TextureRegion textureRegion)
             {
-                super( playScreen, x, y, textureRegion );
-                movement = Movement.UP;
+                super( playScreen, x, y, textureRegion, Movement.UP );
             }
         }
 
@@ -129,8 +132,7 @@ public class MovementBar extends RigidBody
         {
             public ArrowDown( PlayScreen playScreen, float x, float y, TextureRegion textureRegion )
             {
-                super( playScreen, x, y, textureRegion );
-                movement = Movement.DOWN;
+                super( playScreen, x, y, textureRegion,Movement.DOWN );
             }
         }
 
@@ -138,8 +140,7 @@ public class MovementBar extends RigidBody
         {
             public ArrowLeft( PlayScreen playScreen, float x, float y, TextureRegion textureRegion )
             {
-                super( playScreen, x, y, textureRegion );
-                movement = Movement.LEFT;
+                super( playScreen, x, y, textureRegion, Movement.LEFT );
             }
         }
 
@@ -147,8 +148,7 @@ public class MovementBar extends RigidBody
         {
             public ArrowRight( PlayScreen playScreen, float x, float y, TextureRegion textureRegion )
             {
-                super( playScreen, x, y, textureRegion );
-                movement = Movement.RIGHT;
+                super( playScreen, x, y, textureRegion, Movement.RIGHT );
             }
         }
 
