@@ -39,7 +39,11 @@ public class MovementBar extends RigidBody
     @Override
     protected void defBody()
     {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(getX(), getY());
+        bodyDef.type = BodyDef.BodyType.StaticBody;
 
+        body = world.createBody(bodyDef);
     }
 
     @Override
@@ -90,7 +94,7 @@ public class MovementBar extends RigidBody
         {
             BodyDef bodyDef = new BodyDef();
             bodyDef.position.set(getX(), getY());
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.type = BodyDef.BodyType.StaticBody;
 
             body = world.createBody(bodyDef);
         }

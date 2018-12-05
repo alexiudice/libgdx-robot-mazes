@@ -482,7 +482,12 @@ public class PlayScreen implements Screen {
 //        }
 //
 //        // draw Mario
+        for( MovementBar.MovementArrow movementArrow : movementBar.movementArrows )
+        {
+            movementArrow.draw( game.batch );
+        }
         robot.draw(game.batch);
+
 
         game.batch.end();
 

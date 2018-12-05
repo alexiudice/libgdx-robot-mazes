@@ -3,11 +3,12 @@ package com.iudice.model.meta;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssetMaster
+public class AssetMaster implements Disposable
 {
 
     private static Map<String,TextureAtlas> textureAtlasMap = new HashMap<String,TextureAtlas>(  );
@@ -33,5 +34,14 @@ public class AssetMaster
     public static TiledMap getTiledMap(String name)
     {
         return tiledMapMap.get( name );
+    }
+
+    @Override
+    public void dispose()
+    {
+        for(String s : textureAtlasMap.keySet())
+        {
+            textureAtlasMap.get( s ).dispose();
+        }
     }
 }
