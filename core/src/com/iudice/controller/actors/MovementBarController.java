@@ -38,6 +38,11 @@ public class MovementBarController
     {
 
         updateCursorPosition();
+
+        for( MovementBar.MovementArrow movementArrow : movementBar.movementArrows)
+        {
+            movementArrow.update( delta );
+        }
         
         switch ( movementBar.state )
         {

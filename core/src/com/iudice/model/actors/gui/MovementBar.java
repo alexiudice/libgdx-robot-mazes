@@ -3,6 +3,7 @@ package com.iudice.model.actors.gui;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.iudice.controller.actors.MovementBarController;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.misc.Movement;
@@ -44,7 +45,7 @@ public class MovementBar extends RigidBody
     @Override
     public void update( float delta )
     {
-
+        MovementBarController.update( delta );
     }
 
     public void addArrowWithMovement(Movement m)
@@ -87,13 +88,28 @@ public class MovementBar extends RigidBody
         @Override
         protected void defBody()
         {
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.position.set(getX(), getY());
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+            body = world.createBody(bodyDef);
         }
 
         @Override
         public void update( float delta )
         {
+            if (destroyed) {
+                return;
+            }
 
+            if (toBeDestroyed) {
+                setBounds(0, 0, 0, 0);
+                world.destroyBody(body);
+                destroyed = true;
+                return;
+            }
+
+            setPosition(body.getPosition().x - 8 / GameManager.PPM, body.getPosition().y - 8 / GameManager.PPM);
         }
 
         public static class ArrowUp extends MovementArrow

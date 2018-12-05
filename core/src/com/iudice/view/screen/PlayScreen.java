@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.iudice.GameStart;
 import com.iudice.controller.AssetLoader;
 import com.iudice.model.actors.Robot;
+import com.iudice.model.actors.gui.MovementBar;
 import com.iudice.model.actors.maptiles.MapTileObject;
 import com.iudice.model.meta.AssetMaster;
 import com.iudice.model.meta.GameManager;
@@ -74,6 +75,7 @@ public class PlayScreen implements Screen {
 //    protected LinkedList<SpawningEffect> effectSpawnQueue;
 
     protected Robot robot;
+    protected MovementBar movementBar;
 
     protected Hud hud;
     protected ScoreIndicator scoreIndicator;
@@ -125,6 +127,7 @@ public class PlayScreen implements Screen {
 //        enemies = worldCreator.getEnemies();
         robot = new Robot(this, (worldCreator.getStartPosition().x + 8) / GameManager.PPM, (worldCreator.getStartPosition().y + 8) / GameManager.PPM);
 
+        movementBar = new MovementBar( this, (worldCreator.getCursorPosition().x + 8) / GameManager.PPM, (worldCreator.getCursorPosition().y + 8) / GameManager.PPM);
 
 //        // for spawning item
 //        items = new Array<Item>();
@@ -374,6 +377,7 @@ public class PlayScreen implements Screen {
 //
 //        // update Mario
 //        mario.update(delta);
+        movementBar.update( delta );
 
         // camera control
         float targetX = camera.position.x;
