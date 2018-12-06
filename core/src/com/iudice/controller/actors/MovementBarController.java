@@ -41,9 +41,13 @@ public class MovementBarController
 
         updateCursorPosition();
 
-        for( MovementBar.MovementArrow movementArrow : movementBar.movementArrows)
+        for(int i = movementBar.movementArrows.size()-1; i >= 0; i--)
         {
-            movementArrow.update( delta );
+            movementBar.movementArrows.get( i ).update( delta );
+            if(movementBar.movementArrows.get( i ).isDestroyed())
+            {
+                movementBar.movementArrows.remove( i );
+            }
         }
         
         switch ( movementBar.state )
@@ -96,9 +100,13 @@ public class MovementBarController
             movementArrow.queueDestroy();
         }
 
-        movementBar.movementArrows.clear();
         movementBar.state = MovementBar.State.CONSUMING;
         updateCursorPosition();
+    }
+
+    public static void removeMovementArrow( MovementBar.MovementArrow movementArrow)
+    {
+        movementBar.movementArrows.remove( movementArrow );
     }
 
     public static void setMovementBar( MovementBar movementBar )

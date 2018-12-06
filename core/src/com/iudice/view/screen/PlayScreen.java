@@ -376,8 +376,8 @@ public class PlayScreen implements Screen {
 //        }
 //
 //        // update Mario
-        robot.update(delta);
         movementBar.update( delta );
+        robot.update(delta);
 
         // camera control
         float targetX = camera.position.x;

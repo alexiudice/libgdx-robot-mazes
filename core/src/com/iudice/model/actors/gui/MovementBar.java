@@ -45,6 +45,8 @@ public class MovementBar extends RigidBody
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
         body = world.createBody(bodyDef);
+
+        body.setUserData( this );
     }
 
     @Override
@@ -101,6 +103,7 @@ public class MovementBar extends RigidBody
             bodyDef.type = BodyDef.BodyType.StaticBody;
 
             body = world.createBody(bodyDef);
+            body.setUserData( this );
         }
 
         @Override
@@ -111,8 +114,9 @@ public class MovementBar extends RigidBody
             }
 
             if (toBeDestroyed) {
-                setBounds(0, 0, 0, 0);
+                setSize(0, 0 );
                 world.destroyBody(body);
+//                MovementBarController.removeMovementArrow( this );
                 destroyed = true;
                 return;
             }

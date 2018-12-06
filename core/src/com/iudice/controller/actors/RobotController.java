@@ -49,11 +49,6 @@ public class RobotController
         switch ( robot.state )
         {
         case MOVING:
-            if(Gdx.input.isKeyJustPressed( Input.Keys.ESCAPE ))
-            {
-                reset();
-                break;
-            }
             if(robot.timeSinceLastMove > robot.timeBetweenMoves)
             {
                 Movement movement = robot.movementList.get( robot.nextMove % robot.numMoves );
@@ -67,8 +62,11 @@ public class RobotController
             }
             break;
         case WAITING:
-            //Make single move
-
+            break;
+        }
+        if(Gdx.input.isKeyJustPressed( Input.Keys.ESCAPE ))
+        {
+            reset();
         }
 
 
@@ -127,5 +125,6 @@ public class RobotController
         robot.movementList.clear();
         robot.nextMove = 0;
         robot.state = Robot.State.WAITING;
+        MovementBarController.reset();
     }
 }
