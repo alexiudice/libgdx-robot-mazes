@@ -22,14 +22,14 @@
    eJzbycTAsBMH/slIHMalH2bGEmb8mBgzqOGOkWYGAA8LZZA=
   </data>
  </layer>
- <layer id="38" name="VDotted" width="17" height="7" offsetx="-0.5" offsety="-0.5">
+ <layer id="38" name="VDotted" width="17" height="7" offsetx="-0.5" offsety="0">
   <data encoding="base64" compression="zlib">
    eJxjYKAeWMeMikfNoNwMSgAA8gsN1Q==
   </data>
  </layer>
- <layer id="39" name="HDotted" width="17" height="7">
+ <layer id="39" name="HDotted" width="17" height="7" offsetx="0" offsety="-0.5">
   <data encoding="base64" compression="zlib">
-   eJxjYKAOWM+MiUfNoMwMSgEAqhgRYw==
+   eJxjYBg8YD0zJh7JZlAKAEkkDek=
   </data>
  </layer>
  <objectgroup id="27" name="Cursor">
