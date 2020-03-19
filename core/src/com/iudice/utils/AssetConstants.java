@@ -17,8 +17,8 @@ public class AssetConstants
     public static final Map<String, String> mapsMap;
     static {
         Map<String, String> temp = new HashMap<String,String>(  );
-        temp.put("1-1", "maps/Level_1-1.tmx");
-        temp.put("1-2", "maps/Level_1-2.tmx");
+        temp.put("1-1", "maps/Level_1-tmp.tmx");
+//        temp.put("1-2", "maps/Level_1-2.tmx");
         mapsMap = Collections.unmodifiableMap(temp);
     }
 }

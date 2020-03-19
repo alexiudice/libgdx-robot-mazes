@@ -30,6 +30,8 @@ import com.iudice.model.actors.maptiles.MapTileObject;
 import com.iudice.model.meta.AssetMaster;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
+import com.iudice.model.misc.Movement;
+import com.iudice.utils.LogicalBoard;
 import com.iudice.view.hud.Hud;
 import com.iudice.view.hud.ScoreIndicator;
 import com.iudice.controller.WorldContactListener;
@@ -58,7 +60,7 @@ public class PlayScreen implements Screen {
     protected OrthogonalTiledMapRenderer mapRenderer;
 
     protected float mapWidth;
-//    protected float mapHeight; // currently not used
+    protected float mapHeight; // currently not used
 
     protected TextureAtlas textureAtlas;
 
@@ -76,6 +78,8 @@ public class PlayScreen implements Screen {
 
     protected Robot robot;
     protected MovementBar movementBar;
+
+    protected LogicalBoard logicalBoard;
 
     protected Hud hud;
     protected ScoreIndicator scoreIndicator;
@@ -119,12 +123,12 @@ public class PlayScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / GameManager.PPM);
 
         mapWidth = ((TiledMapTileLayer) tiledMap.getLayers().get(0)).getWidth();
-//        mapHeight = ((TiledMapTileLayer) tiledMap.getLayers().get(0)).getHeight(); // currently not used
+        mapHeight = ((TiledMapTileLayer) tiledMap.getLayers().get(0)).getHeight(); // currently not used
 
         // create world from TmxTiledMap
-        WorldCreator worldCreator = new WorldCreator(this, tiledMap);
+        WorldCreator worldCreator = new WorldCreator(this, tiledMap, mapHeight * GameManager.PPM);
         mapTileObjects = worldCreator.getMapTileObject();
-//        enemies = worldCreator.getEnemies();
+        logicalBoard = worldCreator.getLogicalBoard();
         robot = new Robot(this, (worldCreator.getStartPosition().x + 8) / GameManager.PPM, (worldCreator.getStartPosition().y + 8) / GameManager.PPM);
 
         movementBar = new MovementBar( this, (worldCreator.getCursorPosition().x + 8) / GameManager.PPM, (worldCreator.getCursorPosition().y + 8) / GameManager.PPM);
@@ -149,8 +153,8 @@ public class PlayScreen implements Screen {
         cameraLeftLimit = GameManager.V_WIDTH / 2;
         cameraRightLimit =  mapWidth - GameManager.V_WIDTH / 2;
 
-        box2DDebugRenderer = new Box2DDebugRenderer();
-        renderB2DDebug = false;
+        box2DDebugRenderer = new Box2DDebugRenderer(  );//new Box2DDebugRenderer(true, true, true, true, false, true);
+        renderB2DDebug = true;
 
         countDown = 3.0f;
 
@@ -445,6 +449,11 @@ public class PlayScreen implements Screen {
     public Vector2 getMarioPosition() {
 //        return mario.getPosition();
         return new Vector2( 0,0 );
+    }
+
+    public LogicalBoard getLogicalBoard()
+    {
+        return logicalBoard;
     }
 
     @Override

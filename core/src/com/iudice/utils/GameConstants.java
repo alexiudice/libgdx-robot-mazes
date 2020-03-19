@@ -18,4 +18,6 @@ public class GameConstants
     public static final String musicPath = "audio/music/";
     public static final String imagesPath = "imgs/";
     public static final String mapsPath = "maps/";
+
+    public static final String BOARD_SIZE = "boardSize";
 }

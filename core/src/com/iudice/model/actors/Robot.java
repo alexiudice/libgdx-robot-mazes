@@ -11,6 +11,7 @@ import com.iudice.model.meta.GameManager;
 import com.iudice.model.misc.Movement;
 import com.iudice.model.phys.Collider;
 import com.iudice.model.phys.RigidBody;
+import com.iudice.utils.Coordinate;
 import com.iudice.view.screen.PlayScreen;
 
 import java.util.ArrayList;
@@ -27,10 +28,11 @@ public class Robot extends RigidBody
 
     public Vector2 startPosition;
 
-    public Map<Movement,TextureRegion> orientation = new HashMap<Movement,TextureRegion>(  );
+    public Map<Movement,TextureRegion> orientationMap = new HashMap<Movement,TextureRegion>(  );
     public TextureAtlas textureAtlas;
 
     public List<Movement> movementList = new ArrayList<Movement>(  );
+    public Movement currentOrientation;
     public int nextMove;
     public int numMoves;
 
@@ -38,12 +40,15 @@ public class Robot extends RigidBody
     public State state;
 
     public float timeSinceLastMove;
-    public final float timeBetweenMoves = 1.5f;
+    public final float timeBetweenMoves = 0.75f;
+
+    public Coordinate robotPosition;
 
     public Robot( PlayScreen playScreen, float x, float y )
     {
         super( playScreen, x, y );
         RobotController.setRobot( this );
+        RobotController.setLogicalBoard( playScreen.getLogicalBoard() );
         RobotController.init( );
     }
 
@@ -64,7 +69,7 @@ public class Robot extends RigidBody
         fixtureDef.filter.categoryBits = GameManager.ROBOT_BIT;
         fixtureDef.filter.maskBits = GameManager.FLAGPOLE_BIT | GameManager.WALL_BIT;
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+//        fixtureDef.isSensor = true;
 
         body.createFixture(fixtureDef).setUserData(this);
 
@@ -75,17 +80,18 @@ public class Robot extends RigidBody
     public void update( float delta )
     {
         RobotController.update( delta );
+        this.robotPosition = new Coordinate( (int) this.getX(), (int) this.getY());
     }
 
     @Override
     public void onCollide( Collider other )
     {
-        super.onCollide( other );
+        RobotController.onCollide( other );
     }
 
-    public Map<Movement,TextureRegion> getOrientation()
+    public Map<Movement,TextureRegion> getOrientationMap()
     {
-        return orientation;
+        return orientationMap;
     }
 
     public TextureAtlas getTextureAtlas()
@@ -101,5 +107,26 @@ public class Robot extends RigidBody
     public int getNextMove()
     {
         return nextMove;
+    }
+
+    public void setRobotOrientation( Movement movement )
+    {
+        this.setRegion( orientationMap.get( movement ) );
+        this.currentOrientation = movement;
+    }
+
+    public void setCurrentOrientation( Movement currentOrientation )
+    {
+        this.currentOrientation = currentOrientation;
+    }
+
+    public Movement getCurrentOrientation()
+    {
+        return currentOrientation;
+    }
+
+    public Coordinate getRobotPosition()
+    {
+        return robotPosition;
     }
 }

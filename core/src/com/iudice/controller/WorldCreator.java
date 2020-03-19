@@ -1,5 +1,6 @@
 package com.iudice.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -7,12 +8,13 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.iudice.model.actors.maptiles.MapTileObject;
-import com.iudice.model.actors.maptiles.WallBottom;
-import com.iudice.model.actors.maptiles.WallLeft;
-import com.iudice.model.actors.maptiles.WallRight;
-import com.iudice.model.actors.maptiles.WallTop;
+import com.iudice.model.actors.maptiles.Orientation;
+import com.iudice.model.actors.maptiles.Wall;
 import com.iudice.model.meta.GameManager;
+import com.iudice.utils.LogicalBoard;
 import com.iudice.view.screen.PlayScreen;
+
+import static com.iudice.utils.GameConstants.BOARD_SIZE;
 
 /**
  *
@@ -22,53 +24,96 @@ import com.iudice.view.screen.PlayScreen;
 public class WorldCreator {
 
     private Array<MapTileObject> mapTileObjects;
+    private LogicalBoard logicalBoard;
 
     private Vector2 startPosition;
     private Vector2 flagPosition;
     private Vector2 cursorPosition;
 
-    public WorldCreator(PlayScreen playScreen, TiledMap tiledMap) {
+    private int boardSize;
 
+    public WorldCreator(PlayScreen playScreen, TiledMap tiledMap, float mapHeight) {
+
+        // Get the Ordered Spaces of the Board
+        MapLayer mapLayer = tiledMap.getLayers().get("Board");
+        if (mapLayer != null) {
+            if ( !mapLayer.getProperties().containsKey( BOARD_SIZE ) )
+            {
+                throw new RuntimeException( "No 'boardSize' property specified in the .tmx" );
+            }
+            boardSize = Integer.valueOf( (String) mapLayer.getProperties().get( BOARD_SIZE ) );
+//            for (MapObject mapObject : mapLayer.getObjects()) {
+//                float x = ((TiledMapTileMapObject) mapObject).getX();
+//                float y = ((TiledMapTileMapObject) mapObject).getY();
+//            }
+        }
+
+        logicalBoard = new LogicalBoard( boardSize );
         mapTileObjects = new Array<MapTileObject>();
 
-        MapLayer mapLayer = tiledMap.getLayers().get("WallRight");
+//        // Uses only the "bottom" wall
+//        mapLayer = tiledMap.getLayers().get("WallHorizontal");
+//        if (mapLayer != null) {
+//            for (MapObject mapObject : mapLayer.getObjects()) {
+//                float x = ((TiledMapTileMapObject) mapObject).getX();
+//                float y = ((TiledMapTileMapObject) mapObject).getY();
+//                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject, Orientation.HORIZONTAL));
+//            }
+//        }
+//
+//        // Uses only the "right" wall
+//        mapLayer = tiledMap.getLayers().get("WallVertical");
+//        if (mapLayer != null) {
+//            for (MapObject mapObject : mapLayer.getObjects()) {
+//                float x = ((TiledMapTileMapObject) mapObject).getX();
+//                float y = ((TiledMapTileMapObject) mapObject).getY();
+//
+//                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject, Orientation.VERTICAL));
+//            }
+//        }
+
+        mapLayer = tiledMap.getLayers().get("WallEast");
         if (mapLayer != null) {
             for (MapObject mapObject : mapLayer.getObjects()) {
                 float x = ((TiledMapTileMapObject) mapObject).getX();
                 float y = ((TiledMapTileMapObject) mapObject).getY();
 
-                mapTileObjects.add(new WallRight(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                logicalBoard.updateTile( x, mapHeight - y, LogicalBoard.WallDirection.EAST );
             }
         }
 
-        mapLayer = tiledMap.getLayers().get("WallLeft");
+        mapLayer = tiledMap.getLayers().get("WallWest");
         if (mapLayer != null) {
             for (MapObject mapObject : mapLayer.getObjects()) {
                 float x = ((TiledMapTileMapObject) mapObject).getX();
                 float y = ((TiledMapTileMapObject) mapObject).getY();
 
-                mapTileObjects.add(new WallLeft(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                logicalBoard.updateTile( x, mapHeight - y, LogicalBoard.WallDirection.WEST );
             }
         }
 
-        mapLayer = tiledMap.getLayers().get("WallTop");
+        mapLayer = tiledMap.getLayers().get("WallNorth");
         if (mapLayer != null) {
             for (MapObject mapObject : mapLayer.getObjects()) {
                 float x = ((TiledMapTileMapObject) mapObject).getX();
                 float y = ((TiledMapTileMapObject) mapObject).getY();
 
-                mapTileObjects.add(new WallTop(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                logicalBoard.updateTile( x, mapHeight - y, LogicalBoard.WallDirection.NORTH );
             }
         }
 
 
-        mapLayer = tiledMap.getLayers().get("WallBottom");
+        mapLayer = tiledMap.getLayers().get("WallSouth");
         if (mapLayer != null) {
             for (MapObject mapObject : mapLayer.getObjects()) {
                 float x = ((TiledMapTileMapObject) mapObject).getX();
                 float y = ((TiledMapTileMapObject) mapObject).getY();
 
-                mapTileObjects.add(new WallBottom(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                logicalBoard.updateTile( x, mapHeight - y, LogicalBoard.WallDirection.SOUTH );
             }
         }
 
@@ -128,4 +173,13 @@ public class WorldCreator {
         return mapTileObjects;
     }
 
+    public LogicalBoard getLogicalBoard()
+    {
+        return logicalBoard;
+    }
+
+    public int getBoardSize()
+    {
+        return boardSize;
+    }
 }

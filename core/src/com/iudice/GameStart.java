@@ -6,6 +6,9 @@ import com.iudice.controller.AssetLoader;
 import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
 
+/**
+ * https://www2.stetson.edu/~efriedma/puzzle/robot/
+ */
 public class GameStart extends Game {
 	public SpriteBatch batch;
 

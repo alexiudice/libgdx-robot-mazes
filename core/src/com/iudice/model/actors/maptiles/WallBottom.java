@@ -1,5 +1,6 @@
 package com.iudice.model.actors.maptiles;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -9,12 +10,14 @@ import com.iudice.model.meta.GameManager;
 import com.iudice.model.phys.Collider;
 import com.iudice.view.screen.PlayScreen;
 
+import static com.iudice.model.meta.GameManager.PPM;
+
 public class WallBottom extends Wall
 {
 
-    public int width = 2;
-    public int height = 16;
-    public Vector2 center = new Vector2( 0,-7 );
+    public static final int widthSize = 16;
+    public static final int heightSize = 2;
+    public static final Vector2 centerArea = new Vector2( 0, -7/16F );
 
     public WallBottom( PlayScreen playScreen, float x, float y, TiledMapTileMapObject mapObject)
     {
@@ -31,12 +34,11 @@ public class WallBottom extends Wall
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-//        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2, center, 0);
-        shape.setAsBox(width / GameManager.PPM / 2, height / GameManager.PPM / 2);
+        shape.setAsBox(widthSize / PPM / 2, heightSize / PPM / 2, centerArea, 0);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = GameManager.WALL_BIT;
-        fixtureDef.filter.maskBits = GameManager.ROBOT_BIT;
+//        fixtureDef.filter.maskBits = GameManager.ROBOT_BIT;
         fixtureDef.shape = shape;
 
         body.createFixture(fixtureDef).setUserData(this);

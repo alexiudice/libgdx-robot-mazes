@@ -11,6 +11,8 @@ import com.iudice.model.meta.GameManager;
 import com.iudice.model.meta.LevelManager;
 import com.iudice.model.misc.Movement;
 import com.iudice.model.phys.Collider;
+import com.iudice.utils.Coordinate;
+import com.iudice.utils.LogicalBoard;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class RobotController
 {
 
     private static Robot robot;
+    private static LogicalBoard logicalBoard;
 
     private RobotController()
     {
@@ -28,20 +31,19 @@ public class RobotController
     {
         robot.textureAtlas = AssetMaster.getTextureAtlas( "robot" );
 
-        robot.orientation.put( Movement.LEFT, new TextureRegion( robot.textureAtlas.findRegion( "robot_left" ) ));
-        robot.orientation.put( Movement.RIGHT, new TextureRegion( robot.textureAtlas.findRegion( "robot_right" ) ));
-        robot.orientation.put( Movement.UP, new TextureRegion( robot.textureAtlas.findRegion( "robot_top" ) ));
-        robot.orientation.put( Movement.DOWN, new TextureRegion( robot.textureAtlas.findRegion( "robot_bottom" ) ));
+        robot.orientationMap.put( Movement.LEFT, new TextureRegion( robot.textureAtlas.findRegion( "robot_left" ) ) );
+        robot.orientationMap.put( Movement.RIGHT, new TextureRegion( robot.textureAtlas.findRegion( "robot_right" ) ) );
+        robot.orientationMap.put( Movement.UP, new TextureRegion( robot.textureAtlas.findRegion( "robot_top" ) ) );
+        robot.orientationMap.put( Movement.DOWN, new TextureRegion( robot.textureAtlas.findRegion( "robot_bottom" ) ) );
 
         robot.numMoves = LevelManager.tmxMap.get( LevelManager.currentLevel ).numMoves;
 
         robot.state = Robot.State.WAITING;
         robot.startPosition = new Vector2( robot.getX(), robot.getY() );
 
-        robot.setRegion( robot.orientation.get( Movement.LEFT ) );
-        robot.setBounds(robot.getX(),robot.getY(), 16 / GameManager.PPM, 16 / GameManager.PPM);
+        robot.setRobotOrientation( Movement.UP ); //robot.setRegion( robot.orientationMap.get( Movement.UP ) );
+        robot.setBounds( robot.getX(), robot.getY(), 16 / GameManager.PPM, 16 / GameManager.PPM );
     }
-
 
     public static void update( float delta )
     {
@@ -49,9 +51,14 @@ public class RobotController
         switch ( robot.state )
         {
         case MOVING:
-            if(robot.timeSinceLastMove > robot.timeBetweenMoves)
+            if ( robot.timeSinceLastMove > robot.timeBetweenMoves )
             {
                 Movement movement = robot.movementList.get( robot.nextMove % robot.numMoves );
+                robot.setCurrentOrientation( movement );
+                if ( !logicalBoard.isValidMove( movement, robotPositionToLogicalPosition() ) )
+                {
+                    movement = Movement.NONE;
+                }
                 RobotController.preformMove( movement );
                 robot.nextMove++;
                 robot.timeSinceLastMove = 0f;
@@ -64,19 +71,17 @@ public class RobotController
         case WAITING:
             break;
         }
-        if(Gdx.input.isKeyJustPressed( Input.Keys.ESCAPE ))
+        if ( Gdx.input.isKeyJustPressed( Input.Keys.ESCAPE ) )
         {
             reset();
         }
 
-
-        robot.setPosition(robot.getBody().getPosition().x - 16 / GameManager.PPM / 2, robot.getBody().getPosition().y - 16 / GameManager.PPM / 2);
+        robot.setPosition( robot.getBody().getPosition().x - 16 / GameManager.PPM / 2, robot.getBody().getPosition().y - 16 / GameManager.PPM / 2 );
     }
 
-
-    public void onCollide( Collider other )
+    public static void onCollide( Collider other )
     {
-        if(other.getUserData() instanceof Wall )
+        if ( other.getUserData() instanceof Wall )
         {
             robot.isCollided = true;
         }
@@ -87,33 +92,44 @@ public class RobotController
         RobotController.robot = robot;
     }
 
+    public static void setLogicalBoard( LogicalBoard logicalBoard )
+    {
+        RobotController.logicalBoard = logicalBoard;
+    }
+
     public static void startMoving( List<Movement> movements )
     {
         robot.state = Robot.State.MOVING;
         robot.movementList = movements;
     }
 
-    public static void preformMove(Movement m){
+    public static void preformMove( Movement m )
+    {
         float currentX = robot.getBody().getPosition().x;
         float currentY = robot.getBody().getPosition().y;
-        float moveDistance = 16/GameManager.PPM;
+        Movement orientationBeforeMove = robot.getCurrentOrientation();
+        float moveDistance = 16 / GameManager.PPM;
         switch ( m )
         {
         case UP:
-            robot.setRegion( robot.orientation.get( Movement.UP ) );
-            robot.getBody().setTransform( currentX,currentY + moveDistance, 0  );
+            robot.setRobotOrientation( Movement.UP );
+            robot.getBody().setTransform( currentX, currentY + moveDistance, 0 );
             break;
         case DOWN:
-            robot.setRegion( robot.orientation.get( Movement.DOWN ) );
-            robot.getBody().setTransform( currentX,currentY-moveDistance, 0  );
+            robot.setRobotOrientation( Movement.DOWN );
+            robot.getBody().setTransform( currentX, currentY - moveDistance, 0 );
             break;
         case LEFT:
-            robot.setRegion( robot.orientation.get( Movement.LEFT ) );
-            robot.getBody().setTransform( currentX - moveDistance,currentY, 0  );
+            robot.setRobotOrientation( Movement.LEFT );
+            robot.getBody().setTransform( currentX - moveDistance, currentY, 0 );
             break;
         case RIGHT:
-            robot.setRegion( robot.orientation.get( Movement.RIGHT) );
-            robot.getBody().setTransform( currentX + moveDistance,currentY, 0  );
+            robot.setRobotOrientation( Movement.RIGHT );
+            robot.getBody().setTransform( currentX + moveDistance, currentY, 0 );
+            break;
+        case NONE:
+            robot.setRobotOrientation( orientationBeforeMove );
+            robot.getBody().setTransform( currentX, currentY, 0 );
             break;
         }
 
@@ -126,5 +142,13 @@ public class RobotController
         robot.nextMove = 0;
         robot.state = Robot.State.WAITING;
         MovementBarController.reset();
+    }
+
+    public static Coordinate robotPositionToLogicalPosition()
+    {
+        Coordinate robotPosition = robot.getRobotPosition();
+        int x = (robotPosition.getX() ) - 1;
+        int y = (logicalBoard.getBoardSize() - robotPosition.getY());
+        return new Coordinate( x,y );
     }
 }
