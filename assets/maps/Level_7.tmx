@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="17" height="7" tilewidth="16" tileheight="16" infinite="0" nextlayerid="38" nextobjectid="863">
+ <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
+  <image source="tileset_gutter.png" width="594" height="504"/>
+ </tileset>
+ <tileset firstgid="925" name="wall" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="7" columns="7">
+  <image source="wall.png" width="128" height="32"/>
+ </tileset>
+ <tileset firstgid="932" name="walls" tilewidth="16" tileheight="16" tilecount="4" columns="4">
+  <image source="walls.png" width="64" height="16"/>
+ </tileset>
+ <tileset firstgid="936" name="boardSprites" tilewidth="16" tileheight="16" tilecount="8" columns="8">
+  <image source="../imgs/boardSprites.png" width="128" height="16"/>
+ </tileset>
+ <layer id="25" name="Sky" width="17" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwxUAAAHcAAE=
+  </data>
+ </layer>
+ <layer id="26" name="Background" width="17" height="7">
+  <data encoding="base64" compression="zlib">
+   eJzbycTAsBMH/slIHMalH2bGEmb8mBgzqOGOkWYGAA8LZZA=
+  </data>
+ </layer>
+ <objectgroup id="27" name="Cursor">
+  <object id="679" gid="58" x="128" y="32" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="29" name="End">
+  <object id="849" gid="936" x="80" y="32" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="12" name="Start">
+  <object id="848" gid="937" x="16" y="96" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="32" name="Board" visible="0">
+  <properties>
+   <property name="boardSize" value="5"/>
+  </properties>
+  <object id="786" gid="28" x="16" y="96" width="16" height="16"/>
+  <object id="787" gid="28" x="32" y="96" width="16" height="16"/>
+  <object id="788" gid="28" x="48" y="96" width="16" height="16"/>
+  <object id="789" gid="28" x="64" y="96" width="16" height="16"/>
+  <object id="790" gid="28" x="80" y="96" width="16" height="16"/>
+  <object id="791" gid="28" x="16" y="80" width="16" height="16"/>
+  <object id="792" gid="28" x="32" y="80" width="16" height="16"/>
+  <object id="793" gid="28" x="48" y="80" width="16" height="16"/>
+  <object id="794" gid="28" x="64" y="80" width="16" height="16"/>
+  <object id="795" gid="28" x="80" y="80" width="16" height="16"/>
+  <object id="796" gid="28" x="16" y="64" width="16" height="16"/>
+  <object id="797" gid="28" x="32" y="64" width="16" height="16"/>
+  <object id="798" gid="28" x="48" y="64" width="16" height="16"/>
+  <object id="799" gid="28" x="64" y="64" width="16" height="16"/>
+  <object id="800" gid="28" x="80" y="64" width="16" height="16"/>
+  <object id="801" gid="28" x="16" y="48" width="16" height="16"/>
+  <object id="802" gid="28" x="32" y="48" width="16" height="16"/>
+  <object id="803" gid="28" x="48" y="48" width="16" height="16"/>
+  <object id="804" gid="28" x="64" y="48" width="16" height="16"/>
+  <object id="805" gid="28" x="80" y="48" width="16" height="16"/>
+  <object id="806" gid="28" x="16" y="32" width="16" height="16"/>
+  <object id="807" gid="28" x="32" y="32" width="16" height="16"/>
+  <object id="808" gid="28" x="48" y="32" width="16" height="16"/>
+  <object id="809" gid="28" x="64" y="32" width="16" height="16"/>
+  <object id="810" gid="28" x="80" y="32" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="34" name="WallNorth">
+  <object id="823" gid="934" x="16" y="32" width="16" height="16"/>
+  <object id="824" gid="934" x="32" y="32" width="16" height="16"/>
+  <object id="825" gid="934" x="48" y="32" width="16" height="16"/>
+  <object id="826" gid="934" x="64" y="32" width="16" height="16"/>
+  <object id="827" gid="934" x="80" y="32" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="35" name="WallSouth">
+  <object id="828" gid="932" x="16" y="96" width="16" height="16"/>
+  <object id="829" gid="932" x="32" y="96" width="16" height="16"/>
+  <object id="830" gid="932" x="48" y="96" width="16" height="16"/>
+  <object id="831" gid="932" x="64" y="96" width="16" height="16"/>
+  <object id="832" gid="932" x="80" y="96" width="16" height="16"/>
+  <object id="856" gid="938" x="48" y="48" width="16" height="16"/>
+  <object id="857" gid="938" x="32" y="64" width="16" height="16"/>
+  <object id="858" gid="938" x="64" y="64" width="16" height="16"/>
+  <object id="859" gid="938" x="64" y="80" width="16" height="16"/>
+  <object id="860" gid="938" x="48" y="80" width="16" height="16"/>
+  <object id="861" gid="938" x="32" y="80" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="36" name="WallEast">
+  <object id="833" gid="935" x="80" y="96" width="16" height="16"/>
+  <object id="834" gid="935" x="80" y="80" width="16" height="16"/>
+  <object id="835" gid="935" x="80" y="64" width="16" height="16"/>
+  <object id="836" gid="935" x="80" y="48" width="16" height="16"/>
+  <object id="837" gid="935" x="80" y="32" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="37" name="WallWest">
+  <object id="838" gid="933" x="16" y="96" width="16" height="16"/>
+  <object id="839" gid="933" x="16" y="80" width="16" height="16"/>
+  <object id="840" gid="933" x="16" y="64" width="16" height="16"/>
+  <object id="841" gid="933" x="16" y="48" width="16" height="16"/>
+  <object id="842" gid="933" x="16" y="32" width="16" height="16"/>
+  <object id="850" gid="939" x="64" y="96" width="16" height="16"/>
+  <object id="851" gid="939" x="64" y="80" width="16" height="16"/>
+  <object id="852" gid="939" x="64" y="64" width="16" height="16"/>
+  <object id="853" gid="939" x="64" y="48" width="16" height="16"/>
+  <object id="854" gid="939" x="80" y="32" width="16" height="16"/>
+  <object id="855" gid="939" x="80" y="48" width="16" height="16"/>
+  <object id="862" gid="939" x="48" y="64" width="16" height="16"/>
+ </objectgroup>
+</map>
