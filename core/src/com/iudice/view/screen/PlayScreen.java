@@ -133,13 +133,6 @@ public class PlayScreen implements Screen {
 
         movementBar = new MovementBar( this, (worldCreator.getCursorPosition().x + 8) / GameManager.PPM, (worldCreator.getCursorPosition().y + 8) / GameManager.PPM);
 
-//        // for spawning item
-//        items = new Array<Item>();
-//        itemSpawnQueue = new LinkedList<SpawningItem>();
-//
-//        // for spawning effect
-//        effects = new Array<Effect>();
-//        effectSpawnQueue = new LinkedList<SpawningEffect>();
 
 
 
@@ -406,6 +399,7 @@ public class PlayScreen implements Screen {
 
         // update levelCompletedStage
         if (levelCompleted) {
+            LevelManager.loadNextLevel( game );
             levelCompletedStage.act(delta);
         }
 

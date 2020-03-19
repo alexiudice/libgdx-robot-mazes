@@ -16,6 +16,8 @@ public class LogicalBoard
     final int boardSize;
     LogicalTile[][] levelBoard;
 
+    Coordinate endTile;
+
     public LogicalBoard( int boardSize )
     {
         this.boardSize = boardSize;
@@ -118,5 +120,20 @@ public class LogicalBoard
     public int getBoardSize()
     {
         return boardSize;
+    }
+
+    public void setEndTile( float x, float y)
+    {
+        endTile =  transformToLogical( new Coordinate( (int) x, (int) y ) ) ;
+    }
+
+    public Coordinate getEndTile()
+    {
+        return endTile;
+    }
+
+    public boolean isWinningPosition( Coordinate logicalRobotPosition )
+    {
+        return logicalRobotPosition.equals( endTile );
     }
 }

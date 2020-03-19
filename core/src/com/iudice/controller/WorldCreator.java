@@ -51,27 +51,6 @@ public class WorldCreator {
         logicalBoard = new LogicalBoard( boardSize );
         mapTileObjects = new Array<MapTileObject>();
 
-//        // Uses only the "bottom" wall
-//        mapLayer = tiledMap.getLayers().get("WallHorizontal");
-//        if (mapLayer != null) {
-//            for (MapObject mapObject : mapLayer.getObjects()) {
-//                float x = ((TiledMapTileMapObject) mapObject).getX();
-//                float y = ((TiledMapTileMapObject) mapObject).getY();
-//                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject, Orientation.HORIZONTAL));
-//            }
-//        }
-//
-//        // Uses only the "right" wall
-//        mapLayer = tiledMap.getLayers().get("WallVertical");
-//        if (mapLayer != null) {
-//            for (MapObject mapObject : mapLayer.getObjects()) {
-//                float x = ((TiledMapTileMapObject) mapObject).getX();
-//                float y = ((TiledMapTileMapObject) mapObject).getY();
-//
-//                mapTileObjects.add(new Wall(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject, Orientation.VERTICAL));
-//            }
-//        }
-
         mapLayer = tiledMap.getLayers().get("WallEast");
         if (mapLayer != null) {
             for (MapObject mapObject : mapLayer.getObjects()) {
@@ -152,6 +131,7 @@ public class WorldCreator {
                 float y = ((TiledMapTileMapObject) mapObject).getY();
 
                 mapTileObjects.add(new EndTile(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+                logicalBoard.setEndTile( x, mapHeight - y );
             }
         }
 

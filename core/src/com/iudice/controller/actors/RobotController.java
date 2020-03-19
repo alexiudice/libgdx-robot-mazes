@@ -43,10 +43,15 @@ public class RobotController
 
         robot.setRobotOrientation( Movement.UP ); //robot.setRegion( robot.orientationMap.get( Movement.UP ) );
         robot.setBounds( robot.getX(), robot.getY(), 16 / GameManager.PPM, 16 / GameManager.PPM );
+        robot.setRobotPosition( new Coordinate(  (int) robot.getBody().getPosition().x, (int) robot.getBody().getPosition().y ));
     }
 
     public static void update( float delta )
     {
+        if ( logicalBoard.isWinningPosition( robotPositionToLogicalPosition() ) )
+        {
+            robot.state = Robot.State.LEVEL_COMPLETED;
+        }
 
         switch ( robot.state )
         {
@@ -70,6 +75,8 @@ public class RobotController
             break;
         case WAITING:
             break;
+        case LEVEL_COMPLETED:
+            break;
         }
         if ( Gdx.input.isKeyJustPressed( Input.Keys.ESCAPE ) )
         {
@@ -77,6 +84,11 @@ public class RobotController
         }
 
         robot.setPosition( robot.getBody().getPosition().x - 16 / GameManager.PPM / 2, robot.getBody().getPosition().y - 16 / GameManager.PPM / 2 );
+
+        if(robot.state == Robot.State.LEVEL_COMPLETED)
+        {
+            reset();
+        }
     }
 
     public static void onCollide( Collider other )
@@ -140,7 +152,7 @@ public class RobotController
         robot.getBody().setTransform( robot.startPosition, 0 );
         robot.movementList.clear();
         robot.nextMove = 0;
-        robot.state = Robot.State.WAITING;
+        robot.state = robot.state == Robot.State.LEVEL_COMPLETED ? Robot.State.LEVEL_COMPLETED : Robot.State.WAITING;
         MovementBarController.reset();
     }
 

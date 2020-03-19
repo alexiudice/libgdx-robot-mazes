@@ -19,7 +19,7 @@ public class AssetConstants
     static {
         Map<String, String> temp = new HashMap<String,String>(  );
         temp.put("1-1", "maps/Level_1-tmp.tmx");
-//        temp.put("1-2", "maps/Level_1-2.tmx");
+        temp.put("1-2", "maps/5x5_template.tmx");
         mapsMap = Collections.unmodifiableMap(temp);
     }
 }

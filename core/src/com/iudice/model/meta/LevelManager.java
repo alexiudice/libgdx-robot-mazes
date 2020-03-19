@@ -31,7 +31,7 @@ public class LevelManager
     {
         tmxMap = new LinkedHashMap<String,Level>(  );
         tmxMap.put( "1-1",new Level( "1","1", "maps/Level_1-tmp.tmx", 4) );
-//        tmxMap.put( "1-2",new Level( "1","2", "maps/Level_1-2.tmx", 4) );
+        tmxMap.put( "1-2",new Level( "1","2", "maps/5x5_template.tmx", 4) );
 
 
         levelIterator = tmxMap.keySet().iterator();

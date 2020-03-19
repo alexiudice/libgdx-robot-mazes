@@ -23,7 +23,8 @@ public class Robot extends RigidBody
 {
     public enum State{
         MOVING,
-        WAITING
+        WAITING,
+        LEVEL_COMPLETED
     }
 
     public Vector2 startPosition;
@@ -40,7 +41,7 @@ public class Robot extends RigidBody
     public State state;
 
     public float timeSinceLastMove;
-    public final float timeBetweenMoves = 0.75f;
+    public final float timeBetweenMoves = 0.25f;
 
     public Coordinate robotPosition;
 
@@ -79,8 +80,15 @@ public class Robot extends RigidBody
     @Override
     public void update( float delta )
     {
-        RobotController.update( delta );
-        this.robotPosition = new Coordinate( (int) this.getX(), (int) this.getY());
+        if ( state == State.LEVEL_COMPLETED )
+        {
+            playScreen.levelCompleted();
+        }
+        else
+        {
+            RobotController.update( delta );
+            this.robotPosition = new Coordinate( (int) this.getX(), (int) this.getY() );
+        }
     }
 
     @Override
@@ -128,5 +136,10 @@ public class Robot extends RigidBody
     public Coordinate getRobotPosition()
     {
         return robotPosition;
+    }
+
+    public void setRobotPosition( Coordinate robotPosition )
+    {
+        this.robotPosition = robotPosition;
     }
 }
