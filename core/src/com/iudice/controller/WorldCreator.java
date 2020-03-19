@@ -1,14 +1,14 @@
 package com.iudice.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.iudice.model.actors.maptiles.EndTile;
 import com.iudice.model.actors.maptiles.MapTileObject;
-import com.iudice.model.actors.maptiles.Orientation;
+import com.iudice.model.actors.maptiles.StartTile;
 import com.iudice.model.actors.maptiles.Wall;
 import com.iudice.model.meta.GameManager;
 import com.iudice.utils.LogicalBoard;
@@ -135,10 +135,23 @@ public class WorldCreator {
         mapLayer = tiledMap.getLayers().get("Start");
         if (mapLayer != null) {
             if (mapLayer.getObjects().getCount() > 0) {
-                float x = ((TiledMapTileMapObject) mapLayer.getObjects().get(0)).getX();
-                float y = ((TiledMapTileMapObject) mapLayer.getObjects().get(0)).getY();
+                MapObject mapObject = mapLayer.getObjects().get( 0 );
+                float x = ((TiledMapTileMapObject) mapObject).getX();
+                float y = ((TiledMapTileMapObject) mapObject).getY();
 
                 startPosition = new Vector2(x, y);
+                mapTileObjects.add(new StartTile(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
+            }
+        }
+
+        mapLayer = tiledMap.getLayers().get("End");
+        if (mapLayer != null) {
+            if (mapLayer.getObjects().getCount() > 0) {
+                MapObject mapObject = mapLayer.getObjects().get( 0 );
+                float x = ((TiledMapTileMapObject) mapObject).getX();
+                float y = ((TiledMapTileMapObject) mapObject).getY();
+
+                mapTileObjects.add(new EndTile(playScreen, (x + 8) / GameManager.PPM, (y + 8) / GameManager.PPM, (TiledMapTileMapObject) mapObject));
             }
         }
 

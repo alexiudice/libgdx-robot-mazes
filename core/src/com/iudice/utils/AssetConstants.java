@@ -11,6 +11,7 @@ public class AssetConstants
         Map<String, String> temp = new HashMap<String,String>(  );
         temp.put("robot", "imgs/robot.atlas");
         temp.put("arrows", "imgs/arrows.atlas");
+        temp.put("boardSprites", "imgs/boardSprites.atlas");
         imgsMap = Collections.unmodifiableMap(temp);
     }
 
