@@ -22,8 +22,8 @@ public class GameManager implements Disposable {
     public static final int WINDOW_WIDTH = Gdx.graphics.getWidth();
     public static final int WINDOW_HEIGHT = Gdx.graphics.getHeight();
 
-    public static final float V_WIDTH = 18.0f;
-    public static final float V_HEIGHT = 15.0f;
+    public static final float V_WIDTH = 17.0f;
+    public static final float V_HEIGHT = 7.0f;
 
     public static final Vector2 GRAVITY = new Vector2(0.0f, 0.0f);//new Vector2(0.0f, -9.8f * 4);
 
