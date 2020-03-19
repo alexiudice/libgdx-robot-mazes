@@ -18,6 +18,9 @@ public class AssetConstants
     public static final Map<String, String> mapsMap;
     static {
         Map<String, String> temp = new HashMap<String,String>(  );
+        // test map
+        temp.put("0-0", "maps/5x5_tmp.tmx");
+
         temp.put("1-1", "maps/Level_1.tmx");
         temp.put("1-2", "maps/Level_2.tmx");
         temp.put("1-3", "maps/Level_3.tmx");

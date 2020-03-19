@@ -3,7 +3,6 @@ package com.iudice.model.meta;
 import com.iudice.GameStart;
 import com.iudice.view.screen.LevelScreen;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,6 +47,9 @@ public class LevelManager
     private void assignTmxFilesToMap()
     {
         tmxMap = new LinkedHashMap<String,Level>(  );
+        // test map
+        tmxMap.put( "0-0", new Level( "1", "1", "maps/5x5_tmp.tmx", 4 ) );
+
         tmxMap.put( "1-1",levels[0]);
         tmxMap.put( "1-2",levels[1]);
         tmxMap.put( "1-3",levels[2]);
