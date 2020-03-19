@@ -456,7 +456,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // draw map - each integer correspond to its own tile layer
-        mapRenderer.render(new int[] {0, 1});
+        mapRenderer.render(new int[] {0, 1, 2, 3});
 
         // draw ScoreIndicator
         scoreIndicator.draw();
