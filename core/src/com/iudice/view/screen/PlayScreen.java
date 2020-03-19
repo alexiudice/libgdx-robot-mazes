@@ -143,8 +143,8 @@ public class PlayScreen implements Screen {
 
 
 
-        hud = new Hud(game.batch);
-        hud.setLevel( LevelManager.tmxMap.get( LevelManager.currentLevel ).world  + "-" + LevelManager.tmxMap.get( LevelManager.currentLevel ).subworld  );
+//        hud = new Hud(game.batch);
+//        hud.setLevel( LevelManager.tmxMap.get( LevelManager.currentLevel ).world  + "-" + LevelManager.tmxMap.get( LevelManager.currentLevel ).subworld  );
 
         scoreIndicator = new ScoreIndicator(this, game.batch);
 
@@ -402,7 +402,7 @@ public class PlayScreen implements Screen {
         scoreIndicator.update(delta);
 
         // update HUD
-        hud.update(delta);
+//        hud.update(delta);
 
         // update levelCompletedStage
         if (levelCompleted) {
@@ -505,7 +505,7 @@ public class PlayScreen implements Screen {
 
 
         // draw HUD
-        hud.draw();
+//        hud.draw();
 
         if (renderB2DDebug) {
             box2DDebugRenderer.render(world, camera.combined);
@@ -537,7 +537,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-        hud.dispose();
+//        hud.dispose();
         scoreIndicator.dispose();
         tiledMap.dispose();
         world.dispose();
