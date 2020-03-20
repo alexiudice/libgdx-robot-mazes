@@ -12,6 +12,7 @@ public class AssetConstants
         temp.put("robot", "imgs/robot.atlas");
         temp.put("arrows", "imgs/arrows.atlas");
         temp.put("boardSprites", "imgs/boardSprites.atlas");
+        temp.put("misc", "imgs/miscRegion.atlas");
         imgsMap = Collections.unmodifiableMap(temp);
     }
 

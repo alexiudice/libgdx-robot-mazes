@@ -29,11 +29,14 @@ public class MovementBar extends RigidBody
     public State state;
     public int numMoves;
     public List<MovementArrow> movementArrows = new ArrayList<MovementArrow>(  );
+    public MovementHighlighter movementHighlighter;
 
     public MovementBar( PlayScreen playScreen, float x, float y )
     {
         super( playScreen, x, y );
+        this.movementHighlighter = new MovementBar.MovementHighlighter(playScreen, x,y);
         MovementBarController.setMovementBar( this );
+        MovementBarController.setMovementHighlighter( movementHighlighter  );
         MovementBarController.init();
     }
 
@@ -158,6 +161,39 @@ public class MovementBar extends RigidBody
 
 
     }
+    public static class MovementHighlighter extends RigidBody
+    {
+        public MovementHighlighter( PlayScreen playScreen, float x, float y )
+        {
+            super( playScreen, x, y );
 
+
+            float width = 8 / GameManager.PPM;
+            float height = 8 / GameManager.PPM;
+
+            setBounds(x - width / 2, y - height / 2, width, height);
+        }
+
+        @Override
+        protected void defBody()
+        {
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.position.set(getX(), getY());
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+
+            body = world.createBody(bodyDef);
+
+            body.setUserData( this );
+
+        }
+
+        @Override
+        public void update( float delta )
+        {
+            MovementBarController.highlightUpdate();
+
+            setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - getHeight()/2);
+        }
+    }
 
 }

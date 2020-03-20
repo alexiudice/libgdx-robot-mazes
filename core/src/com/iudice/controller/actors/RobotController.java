@@ -163,4 +163,9 @@ public class RobotController
         int y = (logicalBoard.getBoardSize() - robotPosition.getY());
         return new Coordinate( x,y );
     }
+
+    public static int currentMovePosition()
+    {
+        return robot.nextMove % robot.numMoves;
+    }
 }

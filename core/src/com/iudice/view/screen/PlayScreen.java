@@ -374,6 +374,7 @@ public class PlayScreen implements Screen {
 //
 //        // update Mario
         movementBar.update( delta );
+        movementBar.movementHighlighter.update( delta );
         robot.update(delta);
 
         // camera control
@@ -489,6 +490,9 @@ public class PlayScreen implements Screen {
         {
             movementArrow.draw( game.batch );
         }
+
+        movementBar.movementHighlighter.draw( game.batch );
+
         robot.draw(game.batch);
 
 

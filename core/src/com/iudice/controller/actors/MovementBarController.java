@@ -2,6 +2,7 @@ package com.iudice.controller.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.iudice.model.actors.gui.MovementBar;
 import com.iudice.model.meta.AssetMaster;
@@ -15,6 +16,9 @@ import java.util.List;
 public class MovementBarController
 {
     private static MovementBar movementBar;
+    private static MovementBar.MovementHighlighter movementHighlighter;
+
+    private static TextureAtlas miscAtlas;
 
     private void MovementBarController()
     {
@@ -23,6 +27,8 @@ public class MovementBarController
 
     public static void init()
     {
+        miscAtlas = AssetMaster.getTextureAtlas( "misc" );
+
         movementBar.textureAtlas = AssetMaster.getTextureAtlas( "arrows" );
 
         movementBar.numMoves = LevelManager.tmxMap.get( LevelManager.currentLevel ).numMoves;
@@ -33,6 +39,10 @@ public class MovementBarController
 
 //        movementBar.setRegion( movementBar.orientation.get( Movement.LEFT ) );
         movementBar.setBounds(movementBar.getX(),movementBar.getY(), movementBar.numMoves * 16 / GameManager.PPM, 16 / GameManager.PPM);
+
+
+        movementHighlighter.setRegion( miscAtlas.findRegion( "yellowHighlight" ) );
+        movementHighlighter.setAlpha( 0.5F );
 
     }
 
@@ -112,5 +122,17 @@ public class MovementBarController
     public static void setMovementBar( MovementBar movementBar )
     {
         MovementBarController.movementBar = movementBar;
+    }
+
+    public static void setMovementHighlighter( MovementBar.MovementHighlighter movementHighlighter )
+    {
+        MovementBarController.movementHighlighter = movementHighlighter;
+    }
+
+    public static void highlightUpdate()
+    {
+        movementHighlighter.getBody().setTransform(
+                movementBar.cursorStartPosition.x + RobotController.currentMovePosition(),
+                movementBar.cursorStartPosition.y, 0);
     }
 }
