@@ -14,7 +14,7 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: 'org.jetbrains.intellij'
+//    apply plugin: 'org.jetbrains.intellij'
     apply plugin: "eclipse"
     apply plugin: "idea"
 
